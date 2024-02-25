@@ -1,22 +1,24 @@
 'use client';
-
+import { UserButton } from "@clerk/nextjs";
 import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 
 const navigation = [
   { name: 'Dashboard', href: '/' },
-  { name: 'Playground', href: '/playground' }
+  { name: 'Team', href: '/team' },
+  { name: 'Project Management', href: '/projects' },
+  { name: 'Ideas', href: '/ideas' },
+  { name: 'Profile', href: '/user-profile' },
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Navbar({ user }: { user: any }) {
+export default function Navbar() {
   const pathname = usePathname();
 
   return (
@@ -27,27 +29,29 @@ export default function Navbar({ user }: { user: any }) {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    className="text-gray-100"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      width="100%"
-                      height="100%"
-                      rx="16"
-                      fill="currentColor"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-                      fill="black"
-                    />
-                  </svg>
+                  <a href="/">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0  0  32  32"
+                      fill="none"
+                      className="text-gray-100"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        width="100%"
+                        height="100%"
+                        rx="16"
+                        fill="currentColor"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M17.6482  10.1305L15.8785  7.02583L7.02979  22.5499H10.5278L17.6482  10.1305ZM19.8798  14.0457L18.11  17.1983L19.394  19.4511H16.8453L15.1056  22.5499H24.7272L19.8798  14.0457Z"
+                        fill="black"
+                      />
+                    </svg>
+                  </a>
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
@@ -68,8 +72,9 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
+                <UserButton />
                 <Menu as="div" className="relative ml-3">
-                  <div>
+                  {/* <div>
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
                       <span className="sr-only">Open user menu</span>
                       <Image
@@ -80,7 +85,7 @@ export default function Navbar({ user }: { user: any }) {
                         alt={`${user?.name || 'placeholder'} avatar`}
                       />
                     </Menu.Button>
-                  </div>
+                  </div> */}
                   <Transition
                     as={Fragment}
                     enter="transition ease-out duration-200"
@@ -90,7 +95,7 @@ export default function Navbar({ user }: { user: any }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    {/* <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       {user ? (
                         <Menu.Item>
                           {({ active }) => (
@@ -120,7 +125,7 @@ export default function Navbar({ user }: { user: any }) {
                           )}
                         </Menu.Item>
                       )}
-                    </Menu.Items>
+                    </Menu.Items> */}
                   </Transition>
                 </Menu>
               </div>
@@ -138,6 +143,7 @@ export default function Navbar({ user }: { user: any }) {
           </div>
 
           <Disclosure.Panel className="sm:hidden">
+
             <div className="space-y-1 pt-2 pb-3">
               {navigation.map((item) => (
                 <Disclosure.Button
@@ -155,8 +161,10 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
+
             </div>
-            <div className="border-t border-gray-200 pt-4 pb-3">
+
+            {/* <div className="border-t border-gray-200 pt-4 pb-3">
               {user ? (
                 <>
                   <div className="flex items-center px-4">
@@ -197,7 +205,7 @@ export default function Navbar({ user }: { user: any }) {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
           </Disclosure.Panel>
         </>
       )}

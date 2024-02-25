@@ -1,5 +1,4 @@
-// import { OrganizationList, OrganizationProfile, OrganizationSwitcher } from "@clerk/nextjs";
-// import OrganizationProfilePage from "../organization-profile/[[...organization-profile]]/page";
+import { OrganizationList, OrganizationProfile, OrganizationSwitcher } from "@clerk/nextjs";
 import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
 
 export default function TeamPage() {
@@ -9,11 +8,11 @@ export default function TeamPage() {
                 <div className="mt-5 mb-10 ml-5">
                     <Card>
                         <Flex
-                            justifyContent="center" // Center items horizontally
-                            alignItems="center" // Center items vertically
+                            justifyContent="center"
+                            alignItems="center"
                             className="space-x-2"
                         >
-                            yo{/* <OrganizationSwitcher /> */}
+                            <OrganizationSwitcher />
                         </Flex>
                     </Card>
                 </div>

@@ -2,7 +2,7 @@
  
 import { UserProfile } from "@clerk/nextjs";
 import PlusIcon from "../../projects/icons/PlusIcon";
-import { CustomProfilePage } from "./components";
+import { CustomProfilePage } from "./CustomPage";
  
 
 const UserProfilePage = () => (
@@ -10,6 +10,8 @@ const UserProfilePage = () => (
     <UserProfile.Page label="Custom Page" labelIcon={<PlusIcon />} url="custom-page">
         <CustomProfilePage />
     </UserProfile.Page>
+    <UserProfile.Page label="account" />
+    <UserProfile.Page label="security" />
   </UserProfile>
 );
  

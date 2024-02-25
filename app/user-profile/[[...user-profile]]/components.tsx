@@ -5,9 +5,3 @@ export function CustomProfilePage() {
     <div>CustomProfilePage</div>
   )
 }
-
-export function CustomTerms() {
-    return (
-      <div>CustomTerms</div>
-    )
-  }

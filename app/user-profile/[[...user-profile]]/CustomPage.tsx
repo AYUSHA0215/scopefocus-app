@@ -1,17 +1,71 @@
+import { useAuth } from '@clerk/nextjs';
 import React from 'react'
-
+import { useState } from 'react';
+import { supabase } from '../../supabase';
+import { useEffect } from 'react';
 
 export function CustomProfilePage() {
+
+  const { getToken, userId } = useAuth()
+  const [user_name, setName] = useState('')
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (user_name === "") {
+      return;
+    }
+    const { data, error } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          user_name
+        },
+      ]);
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+    }
+  }
+
+    // const supabaseAccessToken = await getToken({
+    //   template: 'supabase',
+    // });
+
+    // let supabase; // Define supabase variable here
+
+    // if (supabaseAccessToken === null) {
+    //   console.error('Supabase access token is null');
+    //   // Handle the error appropriately, e.g., show an error message to the user
+    // } else {
+    //   supabase = await supabaseClient(supabaseAccessToken);
+    // }
+
+    // if (supabase) {
+    //   try {
+    //     const { data, error } = await supabase.from('users').insert({ user_name: name, user_id: userId });
+    //     if (error) {
+    //       console.error('Error inserting data:', error);
+    //     } else {
+    //       console.log('Data inserted successfully:', data);
+    //     }
+    //   } catch (error) {
+    //     console.error('Error during Supabase operation:', error);
+    //   }
+    // }  }
+
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <div className="3xl text-2xl">Profile Page</div>
       <div className="mb-6 mt-6">
         <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-        <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input type="text" id="default-input" onChange={(e) => setName(e.target.value)} value={user_name} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       </div>
       <div className="mb-6 mt-6">
         <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
-        <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       </div>
       <div className="mb-6 mt-6">
         <label htmlFor="large-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Interests</label>
@@ -129,7 +183,7 @@ export function CustomProfilePage() {
         <input checked id="bordered-radio-2" type="radio" value="" name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
         <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Fun personality q2 option 2</label>
       </div>
-      <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 mt-5 focus:outline-none dark:focus:ring-blue-800">Update Profile</button>
+      <button type="button" onClick={handleSubmit} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 mt-5 focus:outline-none dark:focus:ring-blue-800">Update Profile</button>
     </main>
   );
 }
